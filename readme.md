@@ -1,38 +1,48 @@
-# Sequence Models - Notation
+# **Sequence Models**
 
-Sequence models are used where the **order of the input** plays an important role in predicting the output.  
-Examples include:
+Sequence models are used when the **order** of the input plays an important role in predicting the output.  
+Some common applications include:
+
 - Speech recognition  
 - Time series prediction  
 - Music generation  
 - Sentiment analysis  
+- And more…
 
 ---
 
-## Notation
+## **Basic Notation**
 
-Let's consider an example sentence:
+Let's understand the notation we'll use for sequence models.
 
-> **"My name is Manish Jyani"**
+### **Example Sequence**
 
-### Input Representation
-- Inputs: `x<1>, x<2>, x<3>, x<4>`
-- Total input length: `T_x = 4`
-- Here, `x` represents the input.
+> “My name is Manish Jyani”
 
-### Output Representation
-- Similarly, `y` represents the output.
-- Total output length: `T_y`.
-
----
-
-### Generalized Notation
-- `x^i<t>` → The **t-th element** in the **i-th training example**.  
-- Here, `t` stands for **temporal position** in the sequence.
+- Inputs: x<sup>&lt;1&gt;</sup>, x<sup>&lt;2&gt;</sup>, x<sup>&lt;3&gt;</sup>, x<sup>&lt;4&gt;</sup>  
+- Total input length: **T<sub>x</sub> = 4**  
+- **x** represents the **input sequence**.  
+- Similarly, **y** will represent the **output sequence**.  
+- **T<sub>y</sub>** will represent the length of the output.
 
 ---
 
-### Gotcha Moment ⚡
-- In sequence inputs, when we refer to the **previous time step**, it means the **previous word** (on the left side).  
-- `x<t-1>` lies to the **left** of `x<t>`.  
-- There is **no actual concept of time** here; `t` is just a positional reference.
+### **Generalized Representation**
+
+For the *i*-th training example:  
+
+x<sup>&lt;t&gt;</sup><sub>i</sub> → the **t-th element** in the **i-th training example**.
+
+- Here, **t** stands for **temporal index** (position in the sequence).
+- Example:  
+  x<sup>&lt;3&gt;</sup><sub>2</sub> → the **3rd word** of the **2nd training example**.
+
+---
+
+### **Important Insight**
+
+In sequence inputs, when we talk about the **previous time step**, it simply refers to the **previous word** in the sequence (on the **left side**).  
+There’s **no actual time** involved here.
+
+Example:  
+x<sup>&lt;t-1&gt;</sup> lies **to the left** of x<sup>&lt;t&gt;</sup>.
