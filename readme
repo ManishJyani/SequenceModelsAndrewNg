@@ -1,0 +1,34 @@
+## Sequence Models
+
+# Week01
+# Sequence Models - Notation
+
+Sequence models are used where the **order of the input** plays an important role in predicting the output.  
+Examples include:
+- Speech recognition  
+- Time series prediction  
+- Music generation  
+- Sentiment analysis  
+## Notation
+Let's consider an example sentence:
+
+> **"My name is Manish Jyani"**
+
+Input Representation
+- Inputs: `x<1>, x<2>, x<3>, x<4>`
+- Total input length: `T_x = 4`
+- Here, `x` represents the input.
+
+Output Representation
+- Similarly, `y` represents the output.
+- Total output length: `T_y`.
+
+Generalized Notation
+- `x^i<t>` → The **t-th element** in the **i-th training example**.  
+- Here, `t` stands for **temporal position** in the sequence.
+
+# Gotcha Moment ⚡
+- In sequence inputs, when we refer to the **previous time step**, it means the **previous word** (on the left side).  
+- `x<t-1>` lies to the **left** of `x<t>`.  
+- There is **no actual concept of time** here; `t` is just a positional reference.
+
