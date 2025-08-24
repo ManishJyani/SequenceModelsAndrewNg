@@ -71,32 +71,21 @@ At time step **t**:
 
 ---
 
+
 ## 3) GRU Equations
 
-**Update gate** — how much past state to carry forward:
-$$
-z^{(t)} = \sigma\!\big(W_z\,[\,h^{(t-1)},\,x^{(t)}\,] + b_z\big)
-$$
+**Update gate**  
+![z_t](https://latex.codecogs.com/png.latex?z^{(t)}%20=%20\sigma(W_z%5B%20h^{(t-1)},x^{(t)}%20%5D%20+%20b_z))
 
-**Reset gate** — how much past to forget when proposing new content:
-$$
-r^{(t)} = \sigma\!\big(W_r\,[\,h^{(t-1)},\,x^{(t)}\,] + b_r\big)
-$$
+**Reset gate**  
+![r_t](https://latex.codecogs.com/png.latex?r^{(t)}%20=%20\sigma(W_r%5B%20h^{(t-1)},x^{(t)}%20%5D%20+%20b_r))
 
-**Candidate hidden state** — proposed new memory (reset gate modulates the past):
-$$
-\tilde{h}^{(t)} = \tanh\!\big(W_h\,[\,r^{(t)} \odot h^{(t-1)},\, x^{(t)}\,] + b_h\big)
-$$
+**Candidate hidden state**  
+![h_tilde](https://latex.codecogs.com/png.latex?\tilde{h}^{(t)}%20=%20\tanh(W_h%5B%20r^{(t)}%20\odot%20h^{(t-1)},%20x^{(t)}%20%5D%20+%20b_h))
 
-**Final hidden state** — blend of old and new, controlled by the update gate:
-$$
-h^{(t)} = \big(1 - z^{(t)}\big)\odot h^{(t-1)} + z^{(t)} \odot \tilde{h}^{(t)}
-$$
+**Final hidden state**  
+![h_t](https://latex.codecogs.com/png.latex?h^{(t)}%20=%20(1-z^{(t)})%20\odot%20h^{(t-1)}%20+%20z^{(t)}%20\odot%20\tilde{h}^{(t)})
 
-**Legend:**  
-\(\sigma\) = sigmoid, \(\tanh\) = hyperbolic tangent, \(\odot\) = element-wise multiply, \([a,b]\) = concatenation.
-
----
 
 ## 4) Advantages (at a glance)
 - **Better long-range memory** than vanilla RNNs.
