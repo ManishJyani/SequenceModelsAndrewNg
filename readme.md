@@ -110,3 +110,55 @@ Think of GRU as a **smart filter**:
 - Final hidden state `h<t>`: A **weighted mix** of past memory and new candidate memory.
 
 ---
+
+# Long Short-Term Memory (LSTM)
+
+## How LSTM Differs from GRU
+LSTM is an advanced variant of RNN, similar to GRU but **more complex**.  
+The main difference lies in **how the memory is controlled**:
+
+| Feature              | GRU                                   | LSTM                                   |
+|----------------------|--------------------------------------|----------------------------------------|
+| **Gates**            | 2 gates → Update & Reset            | 3 gates → Input, Forget & Output      |
+| **Cell State**       | No separate cell state, only hidden state | Maintains a **separate memory cell** `C<t>` |
+| **Complexity**       | Simpler, fewer parameters           | More complex, more parameters         |
+| **Use Case**         | Works well with smaller datasets    | Performs better on long sequences    |
+
+---
+
+## LSTM Equations
+
+### 1. Forget Gate  
+Decides **how much of the previous cell state** to keep:
+![f_t](https://latex.codecogs.com/svg.image?f^{<t>}=\sigma(W_f\cdot[h^{<t-1>},x^{<t>}]+b_f))
+
+---
+
+### 2. Input Gate  
+Determines **how much new information** to add:
+![i_t](https://latex.codecogs.com/svg.image?i^{<t>}=\sigma(W_i\cdot[h^{<t-1>},x^{<t>}]+b_i))
+
+Candidate cell state:
+![C_tilda](https://latex.codecogs.com/svg.image?\tilde{C}^{<t>}=\tanh(W_c\cdot[h^{<t-1>},x^{<t>}]+b_c))
+
+---
+
+### 3. Cell State Update  
+Updates the cell state using **forget** and **input** gates:
+![C_t](https://latex.codecogs.com/svg.image?C^{<t>}=f^{<t>}*C^{<t-1>}+i^{<t>}*\tilde{C}^{<t>})
+
+---
+
+### 4. Output Gate  
+Decides the next hidden state:
+![o_t](https://latex.codecogs.com/svg.image?o^{<t>}=\sigma(W_o\cdot[h^{<t-1>},x^{<t>}]+b_o))
+
+Hidden state update:
+![h_t](https://latex.codecogs.com/svg.image?h^{<t>}=o^{<t>}*\tanh(C^{<t>}))
+
+---
+
+## Key Takeaways
+- LSTM **remembers information longer** than GRU.
+- Uses a **separate cell state** `C<t>` alongside the hidden state `h<t>`.
+- More parameters → better for long dependencies but computationally heavier.
