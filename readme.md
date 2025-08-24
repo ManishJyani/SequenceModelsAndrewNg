@@ -46,3 +46,117 @@ There’s **no actual time** involved here.
 
 Example:  
 x<sup>&lt;t-1&gt;</sup> lies **to the left** of x<sup>&lt;t&gt;</sup>.
+
+
+# Gated Recurrent Unit (GRU)
+
+The **Gated Recurrent Unit (GRU)** is a type of Recurrent Neural Network (RNN) architecture designed to handle **long-term dependencies** more effectively than vanilla RNNs.  
+It introduces **gating mechanisms** to control how information flows through the network, making it efficient and less prone to the **vanishing gradient problem**.
+
+---
+
+## **1. Why GRU?**
+Vanilla RNNs struggle with:
+- **Vanishing/Exploding Gradients** → Training becomes unstable.
+- **Short Memory** → They fail to capture dependencies over long sequences.
+  
+GRUs solve this by **selectively updating or resetting the hidden state** using gates, which helps the network decide **what to keep** and **what to forget**.
+
+---
+
+## **2. Core Idea**
+GRU manages information using a **single hidden state** `h<t>` (no separate cell state like LSTM).  
+The gates decide:
+- Whether to **update** the hidden state with new information.
+- Whether to **reset** the past memory.
+
+This makes GRUs computationally lighter and easier to train compared to LSTMs.
+
+---
+
+## **3. GRU Architecture**
+
+At each time step `t`, the GRU takes:
+- **Input vector**: `x<t>`
+- **Previous hidden state**: `h<t-1>`
+- Produces:
+    - **New hidden state**: `h<t>`
+
+---
+
+## **4. GRU Equations**
+
+### **Step 1 — Update Gate (`z<t>`)**
+Controls **how much past information** to carry forward.
+
+\[
+z^{<t>} = \sigma \left( W_z \cdot [h^{<t-1>}, x^{<t>}] + b_z \right)
+\]
+
+- If `z<t>` → **close to 1** → keep previous hidden state.
+- If `z<t>` → **close to 0** → overwrite with new information.
+
+---
+
+### **Step 2 — Reset Gate (`r<t>`)**
+Decides **how much past information** to ignore.
+
+\[
+r^{<t>} = \sigma \left( W_r \cdot [h^{<t-1>}, x^{<t>}] + b_r \right)
+\]
+
+- If `r<t>` → **close to 0** → forget past memory.
+- If `r<t>` → **close to 1** → use previous memory fully.
+
+---
+
+### **Step 3 — Candidate Hidden State (`\tilde{h}<t>`)**
+The **new memory** created at this time step.
+
+\[
+\tilde{h}^{<t>} = \tanh \left( W_h \cdot [r^{<t>} \odot h^{<t-1>}, x^{<t>}] + b_h \right)
+\]
+
+- If `r<t>` is small, past memory is largely ignored.
+
+---
+
+### **Step 4 — Final Hidden State (`h<t>`)**
+Blend old and new information.
+
+\[
+h^{<t>} = (1 - z^{<t>}) \odot h^{<t-1>} + z^{<t>} \odot \tilde{h}^{<t>}
+\]
+
+- When `z<t>` ≈ **1** → focus on new information.
+- When `z<t>` ≈ **0** → preserve old memory.
+
+---
+
+## **5. Key Advantages of GRU**
+- Simpler than LSTM — fewer gates → **faster training**.
+- Handles **vanishing gradients** better than vanilla RNNs.
+- Requires **fewer parameters** than LSTMs, making it computationally efficient.
+- Performs well when training data is limited.
+
+---
+
+## **6. Summary Table**
+
+| **Aspect**      | **RNN**         | **GRU**         |
+|-----------------|------------------|------------------|
+| Vanishing Gradients | High problem | Reduced problem |
+| Gates           | None            | Update, Reset   |
+| Memory Handling | Single hidden state | Controlled by gates |
+| Training Speed  | Fast, but unstable | Fast & stable |
+| Parameters      | Fewer           | Moderate        |
+
+---
+
+## **7. Intuition**
+Think of GRU as a **smart filter**:
+- **Reset gate**: Decides *“How much past memory to forget?”*
+- **Update gate**: Decides *“How much new info to add?”*
+- Final hidden state `h<t>`: A **weighted mix** of past memory and new candidate memory.
+
+---
